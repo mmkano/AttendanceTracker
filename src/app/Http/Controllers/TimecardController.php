@@ -32,6 +32,11 @@ class TimecardController extends Controller
                             'start_time' => $now,
                         ]);
                     }
+                }elseif ($action == 'end_time') {
+                    $attendance = Attendance::where('user_id', $user->id)->whereDate('date', $today)->first();
+                    if ($attendance && !$attendance->end_time) {
+                        $attendance->update(['end_time' => $now]);
+                    }
                 }
             }
             return back();
