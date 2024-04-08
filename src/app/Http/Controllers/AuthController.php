@@ -25,4 +25,21 @@ class AuthController extends Controller
 
         return view('auth.login');
     }
+
+    public function showLoginForm() {
+        return view('auth.login');
+    }
+
+    public function login(Request $request) {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('/');
+        }
+
+        return back()->withErrors(['email' => '提供された認証情報が記録と一致しません。']);
+    }
 }
