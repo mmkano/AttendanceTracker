@@ -26,3 +26,4 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [TimecardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::post('/', [TimecardController::class, 'handleAction'])->name('timecard.action');

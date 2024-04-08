@@ -15,4 +15,25 @@ class TimecardController extends Controller
 
         return view('index', compact('attendanceToday'));
         }
+
+        public function handleAction(Request $request){
+            $user = Auth::user();
+            $today = now()->format('Y-m-d');
+            $now = now();
+
+            if ($request->has('work_action')) {
+                $action = $request->input('work_action');
+                if ($action == 'start_time') {
+                    $exists = Attendance::where('user_id', $user->id)->whereDate('date', $today)->exists();
+                    if (!$exists) {
+                        Attendance::create([
+                            'user_id' => $user->id,
+                            'date' => $today,
+                            'start_time' => $now,
+                        ]);
+                    }
+                }
+            }
+            return back();
+        }
 }
