@@ -23,14 +23,12 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        return [
             return [
                 'name' => 'required',
                 'email' => 'required|email',
                 'password' => 'required|confirmed',
                 'password_confirmation' => 'required_with:password|same:password',
             ];
-        ];
     }
 
     public function messages()
