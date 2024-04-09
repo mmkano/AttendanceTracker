@@ -79,14 +79,16 @@ class TimecardController extends Controller
             }
 
             if ($date == Carbon::today()->toDateString() && !$request->has('date')) {
-                $attendances = Attendance::with(['user', 'breakTimes'])->get();
+                $query = Attendance::with(['user', 'breakTimes']);
             } else {
-                $attendances = Attendance::with(['user', 'breakTimes'])->whereDate('date', $date)->get();
+                $query = Attendance::with(['user', 'breakTimes'])->whereDate('date', $date);
             }
 
-            $dailyAttendances = $attendances->transform(function ($attendance) {
+            $dailyAttendances = $query->paginate(5)->withQueryString();
+
+            $dailyAttendances->getCollection()->transform(function ($attendance) {
                 $totalBreakMinutes = $attendance->breakTimes->sum(function ($break) {
-                    return Carbon::parse($break->break_start_time)->diffInMinutes($break->break_end_time);
+                return Carbon::parse($break->break_start_time)->diffInMinutes($break->break_end_time);
                 });
                 $workMinutes = $attendance->end_time ? Carbon::parse($attendance->start_time)->diffInMinutes($attendance->end_time) : 0;
                 $totalWorkMinutes = $workMinutes - $totalBreakMinutes;
