@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\User;
+use Carbon\Carbon;
 
 class TimecardController extends Controller
 {
@@ -62,5 +63,41 @@ class TimecardController extends Controller
                 }
             }
             return back();
+        }
+
+        public function showDailyAttendance(Request $request){
+            $date = $request->input('date', Carbon::today()->toDateString());
+
+            if ($request->has('change_date')) {
+                $date = Carbon::createFromFormat('Y-m-d', $date);
+                if ($request->input('change_date') === 'previous') {
+                    $date = $date->subDay();
+                } elseif ($request->input('change_date') === 'next') {
+                    $date = $date->addDay();
+                }
+                $date = $date->toDateString();
+            }
+
+            if ($date == Carbon::today()->toDateString() && !$request->has('date')) {
+                $attendances = Attendance::with(['user', 'breakTimes'])->get();
+            } else {
+                $attendances = Attendance::with(['user', 'breakTimes'])->whereDate('date', $date)->get();
+            }
+
+            $dailyAttendances = $attendances->transform(function ($attendance) {
+                $totalBreakMinutes = $attendance->breakTimes->sum(function ($break) {
+                    return Carbon::parse($break->break_start_time)->diffInMinutes($break->break_end_time);
+                });
+                $workMinutes = $attendance->end_time ? Carbon::parse($attendance->start_time)->diffInMinutes($attendance->end_time) : 0;
+                $totalWorkMinutes = $workMinutes - $totalBreakMinutes;
+                return [
+                    'user_name' => $attendance->user->name,
+                    'start_time' => Carbon::parse($attendance->start_time)->format('H:i:s'),
+                    'end_time' => $attendance->end_time ? Carbon::parse($attendance->end_time)->format('H:i:s') : '---',
+                    'total_break_time' => sprintf('%02d:%02d:00', intdiv($totalBreakMinutes, 60), $totalBreakMinutes % 60),
+                    'total_work_time' => sprintf('%02d:%02d:00', intdiv($totalWorkMinutes, 60), $totalWorkMinutes % 60),
+                ];
+            });
+            return view('attendance_daily', compact('dailyAttendances', 'date'));
         }
 }

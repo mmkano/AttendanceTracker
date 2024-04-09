@@ -16,8 +16,8 @@
                 </a>
                 <nav>
                     <ul>
-                        <li><a href="#">ホーム</a></li>
-                        <li><a href="#">日付一覧</a></li>
+                        <li><a href="{{ route('dashboard') }}">ホーム</a></li>
+                        <li><a href="{{ route('attendance_daily') }}">日付一覧</a></li>
                         <li>
                             <form class="logout" action="{{ route('logout') }}" method="post">
                             @csrf

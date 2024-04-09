@@ -27,3 +27,4 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [TimecardController::class, 'index'])->middleware('auth')->name('dashboard');
 Route::post('/', [TimecardController::class, 'handleAction'])->name('timecard.action');
+Route::get('/attendance_daily', [TimecardController::class, 'showDailyAttendance'])->name('attendance_daily');
