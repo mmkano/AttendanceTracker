@@ -33,6 +33,9 @@
                     </tr>
                     @endforeach
                 </table>
+                <div class="pagination">
+                    {{ $dailyAttendances->links('vendor.pagination.simple-custom') }}
+                </div>
             </div>
         </main>
         <footer>

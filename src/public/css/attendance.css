@@ -1,6 +1,6 @@
 main{
     background-color: #f2f2f2;
-    min-height: 100vh;
+    min-height: 80vh;
     margin-top: 20px;
 }
 
@@ -65,4 +65,53 @@ footer {
 footer p {
     font-weight: bold;
     font-size: 0.8em;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 15px 0;
+    justify-content: center;
+}
+
+.pagination li {
+    margin: 0 ;
+}
+
+.pagination li a, .pagination li span {
+    display: block;
+    padding: 5px 15px;
+    text-decoration: none;
+    color: #2384cf;
+    background: white;
+    border: 1px solid #e7eaed;
+}
+
+.pagination li.active span {
+    color: white;
+    background-color: #2384cf;
+}
+
+.pagination li.disabled span {
+    color: #ccc;
+    border-color: #eee;
+}
+
+.pagination li a:hover {
+    background-color: #e9e9e9;
+}
+
+.pagination li.disabled {
+    color: #ccc;
+    pointer-events: none;
+}
+
+.pagination li:first-child a {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.pagination li:last-child a {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
