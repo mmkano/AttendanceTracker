@@ -14,8 +14,10 @@ class TimecardController extends Controller
         $user = Auth::user();
         $today = now()->format('Y-m-d');
         $attendanceToday = Attendance::where('user_id', $user->id)->whereDate('date', $today)->first();
+        $lastBreak = $attendanceToday ? $attendanceToday->breakTimes->sortByDesc('break_start_time')->first() : null;
+        $isLastBreakEnded = $lastBreak ? (bool)$lastBreak->break_end_time : true;
 
-        return view('index', compact('attendanceToday'));
+        return view('index', compact('attendanceToday','isLastBreakEnded'));
         }
 
         public function handleAction(Request $request){
@@ -51,6 +53,11 @@ class TimecardController extends Controller
                             'attendance_id' => $attendance->id,
                             'break_start_time' => $now->format('Y-m-d H:i:s'),
                         ]);
+                    }elseif ($action == 'end_time') {
+                        $breakTime = BreakTime::where('attendance_id', $attendance->id)->latest('break_start_time')->first();
+                        if ($breakTime && !$breakTime->break_end_time) {
+                            $breakTime->update(['break_end_time' => $now->format('Y-m-d H:i:s')]);
+                        }
                     }
                 }
             }
