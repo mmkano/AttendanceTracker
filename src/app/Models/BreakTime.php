@@ -11,4 +11,9 @@ class BreakTime extends Model
 
     protected $table = 'break_times';
     protected $fillable = ['attendance_id', 'break_start_time', 'break_end_time',];
+
+    public function attendance()
+    {
+        return $this->belongsTo(Attendance::class);
+    }
 }
