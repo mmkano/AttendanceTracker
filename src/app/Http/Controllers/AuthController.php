@@ -75,9 +75,9 @@ class AuthController extends Controller
         $email = Auth::user()->email;
 
         return view('auth.code', ['email' => $email]);
-        }
+    }
 
-        public function verifyCode(Request $request){
+    public function verifyCode(Request $request){
         $request->validate([
             'auth_code' => 'required|numeric|digits:6',
         ]);
@@ -94,9 +94,9 @@ class AuthController extends Controller
         } else {
             return back()->withErrors(['auth_code' => '認証コードが一致しないか、または期限が切れています。']);
         }
-        }
+    }
 
-        public function resendCode(Request $request){
+    public function resendCode(Request $request){
         $user = $request->user();
         $code = rand(100000, 999999);
         Mail::to($user->email)->send(new AuthCodeMail($code));
