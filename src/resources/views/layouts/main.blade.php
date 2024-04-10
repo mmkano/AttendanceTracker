@@ -18,6 +18,7 @@
                     <ul>
                         <li><a href="{{ route('dashboard') }}">ホーム</a></li>
                         <li><a href="{{ route('attendance_daily') }}">日付一覧</a></li>
+                        <li><a href="{{ route('users') }}">ユーザー一覧</a></li>
                         <li>
                             <form class="logout" action="{{ route('logout') }}" method="post">
                             @csrf
