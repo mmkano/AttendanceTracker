@@ -24,6 +24,9 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/auth/code', [AuthController::class, 'showCodeForm'])->name('auth.code');
+Route::post('/auth/code', [AuthController::class, 'verifyCode']);
+Route::post('/resend-code', [AuthController::class, 'resendCode'])->name('resend.code');
 
 Route::get('/', [TimecardController::class, 'index'])->middleware('auth')->name('dashboard');
 Route::post('/', [TimecardController::class, 'handleAction'])->name('timecard.action');
