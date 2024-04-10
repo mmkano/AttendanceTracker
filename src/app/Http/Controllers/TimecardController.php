@@ -114,4 +114,57 @@ class TimecardController extends Controller
 
             return view('user', ['users' => $users]);
         }
+
+        public function showUserRecords(Request $request, $userId) {
+            $user = User::with('attendances.breakTimes')->findOrFail($userId);
+
+            $dateInput = $request->input('date', Carbon::now()->format('Y-m'));
+
+            if ($request->has('change_date')) {
+                $carbonDate = Carbon::createFromFormat('Y-m', $dateInput);
+                if ($request->input('change_date') === 'previous') {
+                    $carbonDate = $carbonDate->subMonth();
+                } elseif ($request->input('change_date') === 'next') {
+                    $carbonDate = $carbonDate->addMonth();
+                }
+                $dateInput = $carbonDate->format('Y-m');
+            }
+
+            $startOfMonth = Carbon::createFromFormat('Y-m', $dateInput)->startOfMonth();
+            $endOfMonth = Carbon::createFromFormat('Y-m', $dateInput)->endOfMonth();
+
+            $totalWorkMinutesOverall = 0;
+
+            $records = $user->attendances()->with('breakTimes')
+                ->whereBetween('start_time', [$startOfMonth, $endOfMonth])
+                ->get()
+                ->map(function ($attendance) use (&$totalWorkMinutesOverall) {
+                    $totalBreakSeconds = $attendance->breakTimes->sum(function ($break) {
+                        return Carbon::parse($break->break_start_time)->diffInSeconds($break->break_end_time);
+                    });
+
+                    $workSeconds = $attendance->end_time ? Carbon::parse($attendance->start_time)->diffInSeconds($attendance->end_time) : 0;
+                    $totalWorkSeconds = $workSeconds - $totalBreakSeconds;
+                    $totalWorkMinutesOverall += intdiv($totalWorkSeconds, 60);
+
+                    return [
+                        'date' => $attendance->date,
+                        'start_time' => Carbon::parse($attendance->start_time)->format('H:i:s'),
+                        'end_time' => $attendance->end_time ? Carbon::parse($attendance->end_time)->format('H:i:s') : '---',
+                        'total_break_time' => sprintf('%02d:%02d:%02d', intdiv($totalBreakSeconds, 3600), ($totalBreakSeconds % 3600) / 60, $totalBreakSeconds % 60),
+                        'total_work_time' => sprintf('%02d:%02d:%02d', intdiv($totalWorkSeconds, 3600), ($totalWorkSeconds % 3600) / 60, $totalWorkSeconds % 60),
+                    ];
+                });
+
+            $totalHoursOverall = intdiv($totalWorkMinutesOverall, 60);
+            $totalMinutesOverall = $totalWorkMinutesOverall % 60;
+
+            return view('user_record', [
+                'user' => $user,
+                'records' => $records,
+                'totalHoursOverall' => $totalHoursOverall,
+                'totalMinutesOverall' => $totalMinutesOverall,
+                'date' => $dateInput,
+            ]);
+        }
 }
