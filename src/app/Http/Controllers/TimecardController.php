@@ -102,4 +102,16 @@ class TimecardController extends Controller
             });
             return view('attendance_daily', compact('dailyAttendances', 'date'));
         }
+
+        public function listUsers(Request $request){
+            $search = $request->input('search');
+
+            if (!empty($search)) {
+                $users = User::where('name', 'like', '%' . $search . '%')->paginate(5);
+            } else {
+                $users = User::paginate(5);
+            }
+
+            return view('user', ['users' => $users]);
+        }
 }

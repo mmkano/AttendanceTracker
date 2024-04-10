@@ -31,3 +31,4 @@ Route::post('/resend-code', [AuthController::class, 'resendCode'])->name('resend
 Route::get('/', [TimecardController::class, 'index'])->middleware('auth')->name('dashboard');
 Route::post('/', [TimecardController::class, 'handleAction'])->name('timecard.action');
 Route::get('/attendance_daily', [TimecardController::class, 'showDailyAttendance'])->name('attendance_daily');
+Route::get('/users', [TimecardController::class, 'listUsers'])->name('users');
