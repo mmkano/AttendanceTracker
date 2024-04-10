@@ -32,3 +32,4 @@ Route::get('/', [TimecardController::class, 'index'])->middleware('auth')->name(
 Route::post('/', [TimecardController::class, 'handleAction'])->name('timecard.action');
 Route::get('/attendance_daily', [TimecardController::class, 'showDailyAttendance'])->name('attendance_daily');
 Route::get('/users', [TimecardController::class, 'listUsers'])->name('users');
+Route::get('/user/{userId}/records', [TimecardController::class, 'showUserRecords'])->name('user.records');
