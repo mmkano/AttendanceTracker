@@ -87,17 +87,17 @@ class TimecardController extends Controller
             $dailyAttendances = $query->paginate(5)->withQueryString();
 
             $dailyAttendances->getCollection()->transform(function ($attendance) {
-                $totalBreakMinutes = $attendance->breakTimes->sum(function ($break) {
-                return Carbon::parse($break->break_start_time)->diffInMinutes($break->break_end_time);
+                $totalBreakSeconds = $attendance->breakTimes->sum(function ($break) {
+                    return Carbon::parse($break->break_start_time)->diffInSeconds($break->break_end_time);
                 });
-                $workMinutes = $attendance->end_time ? Carbon::parse($attendance->start_time)->diffInMinutes($attendance->end_time) : 0;
-                $totalWorkMinutes = $workMinutes - $totalBreakMinutes;
+                $workSeconds = $attendance->end_time ? Carbon::parse($attendance->start_time)->diffInSeconds($attendance->end_time) : 0;
+                $totalWorkSeconds = $workSeconds - $totalBreakSeconds;
                 return [
                     'user_name' => $attendance->user->name,
                     'start_time' => Carbon::parse($attendance->start_time)->format('H:i:s'),
                     'end_time' => $attendance->end_time ? Carbon::parse($attendance->end_time)->format('H:i:s') : '---',
-                    'total_break_time' => sprintf('%02d:%02d:00', intdiv($totalBreakMinutes, 60), $totalBreakMinutes % 60),
-                    'total_work_time' => sprintf('%02d:%02d:00', intdiv($totalWorkMinutes, 60), $totalWorkMinutes % 60),
+                    'total_break_time' => sprintf('%02d:%02d:%02d', $totalBreakSeconds / 3600, ($totalBreakSeconds % 3600) / 60, $totalBreakSeconds % 60),
+                    'total_work_time' => sprintf('%02d:%02d:%02d', $totalWorkSeconds / 3600, ($totalWorkSeconds % 3600) / 60, $totalWorkSeconds % 60),
                 ];
             });
             return view('attendance_daily', compact('dailyAttendances', 'date'));
