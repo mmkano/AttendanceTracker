@@ -25,7 +25,7 @@
                     @foreach($users as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
-                        <td><a href="" class="user_btn">勤怠表</a></td>
+                        <td><a href="{{ route('user.records', ['userId' => $user->id]) }}" class="user_btn">勤怠表</a></td>
                     </tr>
                     </tr>
                     @endforeach
