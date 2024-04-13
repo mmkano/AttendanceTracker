@@ -91,7 +91,6 @@ footer p {
 .pagination li.active span {
     color: white;
     background-color: #2384cf;
-    border-color: #8b7969;
 }
 
 .pagination li.disabled span {
@@ -129,8 +128,9 @@ footer p {
 .user_btn{
     text-decoration: none;
     color: white;
-    background-color: blue;
+    background-color: #3333ff;
     padding: 12px;
+    border-radius: 5px;
 }
 
 .search-form form{
@@ -143,4 +143,12 @@ footer p {
     height: 35px;
     width: 200px;
     margin-right: 10px;
+}
+
+.btn{
+    color: white;
+    background-color: #3333ff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
 }
