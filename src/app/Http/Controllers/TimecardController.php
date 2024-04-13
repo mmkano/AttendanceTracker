@@ -108,6 +108,7 @@ class TimecardController extends Controller
 
             if (!empty($search)) {
                 $users = User::where('name', 'like', '%' . $search . '%')->paginate(5);
+                $users->appends(['search' => $search]);
             } else {
                 $users = User::paginate(5);
             }
