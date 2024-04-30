@@ -1,0 +1,87 @@
+.login__content {
+    display: flex;
+    max-width: 1230px;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    min-height: 78vh;
+    width: 73%;
+}
+
+#loginTitle {
+    padding: 45px 20px 20px;
+}
+
+#loginSection {
+    width: 40%;
+    height: 400px;
+    background-color: white;
+    padding: 40px 20px 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#loginForm {
+    display: flex;
+    width: 34%;
+    margin: 0 auto;
+    flex-direction: column;
+    background-color: #f2f2f2;
+}
+
+label {
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 10px;
+    margin-top: 25px;
+    color: #969696;
+    font-weight: bold;
+    background-color: #f4f4f4;
+    border: 1px solid #969696;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    background-color: #3333ff;
+    color: white;
+    margin: 0 auto;
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+}
+
+.sub{
+    color: #969696;
+    font-size: 14px;
+}
+.sub a{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #3333ff;
+}
+
+footer {
+    text-align: center;
+    border-top: 1px solid #eaeaea;
+    background-color: #ffff;
+}
+
+footer p {
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.login-form__error-message{
+    font-size: 13px;
+    margin: 0;
+    color: red;
+}
