@@ -53,9 +53,12 @@
 
 
 ## テーブル設計  
+<img width="640" alt="スクリーンショット 2024-05-08 1 40 32" src="https://github.com/mmkano/management_system/assets/155986309/ad896530-ff0f-497e-8778-33fdd0997b8f">   
+<img width="637" alt="スクリーンショット 2024-05-08 1 43 18" src="https://github.com/mmkano/management_system/assets/155986309/4ca0bef6-b03a-4259-8d48-59527c6d918e">
 
 
 ## ER図  
+![er drawio](https://github.com/mmkano/management_system/assets/155986309/9d20fbe3-0883-48f0-9660-2a49fc69ed16)
 
 
 
