@@ -3,6 +3,7 @@
 このアプリではLaravelの認証機能を利用して会員登録、ログイン、ログアウトが行えます。特に勤務の記録に関しては、日を跨ぐと自動的に翌日の出勤操作に切り替わる機能があり、勤務開始と勤務終了を記録できます。また、休憩は1日に何度も取ることができ、その開始と終了も管理できます。　　
 
 勤怠情報は日付別に取得可能で、情報は5件ごとにページネーションで表示されます。ユーザーはメール認証を通じて本人確認を行うことができ、それぞれのユーザー専用のページから個別の勤怠表を確認することが可能です。  
+<img width="1459" alt="スクリーンショット 2024-05-08 23 12 43" src="https://github.com/mmkano/management_system/assets/155986309/86c6c45c-5dac-4cc5-8501-c3d6d96713f7">
 
 
 ## 作成した目的  
@@ -61,7 +62,6 @@
 ![er drawio](https://github.com/mmkano/management_system/assets/155986309/9d20fbe3-0883-48f0-9660-2a49fc69ed16)
 
 
-
 ## 環境構築  
 
 **Dockerビルド**  
@@ -90,6 +90,7 @@ php artisan migrate
 ``` bash
 php artisan db:seed --class=ComprehensiveSeeder
 ```     
+
 
 ## 注意事項
 * ダミーデータは3月分のみを作成しております　　
