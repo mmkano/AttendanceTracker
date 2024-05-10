@@ -15,12 +15,12 @@
 ## アプリケーションURL    
 
 ### AWS（開発環境）  
-* http://54.95.45.50/  
-* mailhog:http://54.95.45.50:8025/  
+* http://54.249.183.36/  
+* mailhog:http://54.249.183.36:8025/  
 
 ### AWS(本番環境）  
-* http://54.95.45.50/  
-* mailhog：http://54.95.45.50:8026/  
+* http://13.231.137.116/  
+* mailhog：http://13.231.137.116:8026/  
 
 
 ## 機能一覧  
@@ -49,12 +49,13 @@
 
 
 ## テーブル設計  
-<img width="640" alt="スクリーンショット 2024-05-08 1 40 32" src="https://github.com/mmkano/management_system/assets/155986309/ad896530-ff0f-497e-8778-33fdd0997b8f">   
-<img width="637" alt="スクリーンショット 2024-05-08 1 43 18" src="https://github.com/mmkano/management_system/assets/155986309/4ca0bef6-b03a-4259-8d48-59527c6d918e">
+![スクリーンショット 2024-05-11 3 27 35](https://github.com/mmkano/management_system/assets/155986309/18c2619b-a301-4233-bf01-ad5b0a7f9c10)  
+![スクリーンショット 2024-05-11 3 27 47](https://github.com/mmkano/management_system/assets/155986309/6a6035ed-698b-463f-a81c-6108b65670a4)
+
 
 
 ## ER図  
-![er drawio](https://github.com/mmkano/management_system/assets/155986309/9d20fbe3-0883-48f0-9660-2a49fc69ed16)
+![er drawio](https://github.com/mmkano/AttendanceTracker/assets/155986309/6cf9fe75-9606-4e2f-be45-65a1ee6ab7b2)
 
 
 ## 環境構築  
@@ -87,5 +88,7 @@ php artisan db:seed --class=ComprehensiveSeeder
 ```     
 
 
-## 注意事項
-* ダミーデータは3月分のみを作成しております　　
+## 補足事項
+* 検索機能、総労働時間の表示、および休みの日の時間を 00:00:00 と記載する追加実装については、コーチと相談して決定しました。  
+
+
